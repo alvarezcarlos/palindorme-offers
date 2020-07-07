@@ -1,26 +1,34 @@
-function palindrome(str) {
+function palindrome(productKey) {
   var re = /[\W_]/g;
-  var lowRegStr = str.toLowerCase().replace(re, '');
-  var reverseStr = lowRegStr.split('').reverse().join(''); 
-  return reverseStr === lowRegStr;
+
+  if(typeof productKey == "number" && productKey > 9){
+    const reverseStr = productKey.toString().split('').reverse().join('');
+    return reverseStr === productKey.toString();
+  }
+
+  if(typeof productKey == "string"){
+    const lowRegStr = productKey.toLowerCase().replace(re, '');
+    const reverseStr = lowRegStr.split('').reverse().join('');
+    return reverseStr === lowRegStr;
+  }
 }
 
 const addOfferProperty = products => {
-  products.forEach((product, i) => {
-    // if(palindrome(p.id)){
-    //   p.offer = true
-    // }
-    if(!product.offer && palindrome(product.brand)){
 
+  products.forEach((product, i) => {
+
+    if(palindrome(product.id))
       products[i]._doc.offer = true;
-      console.log(products[i])
-    }
-    if(!product.offer && palindrome(product.description)){
-      products[i]._doc.offer = true
-    }
+
+    if(!product.offer && palindrome(product.brand))
+      products[i]._doc.offer = true;
+
+    if(!product.offer && palindrome(product.description))
+      products[i]._doc.offer = true;
+
   });
+
   return products;
 }
-
 
 module.exports = addOfferProperty;
