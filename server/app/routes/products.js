@@ -6,6 +6,7 @@ const addOfferProperty = require('../../services/addOfferProperty')
 router
   .route("/products")
   .get(async (req, res) =>{
+    const allowedParams = ["id", "brand", "description"]
     const query = req.query;
     const keys = Object.keys(query)
 
@@ -13,11 +14,17 @@ router
 
     if(!isValidQuery){
       res.status(400)
-      res.send("Se debe buscar por una categoría a la vaz")
+      res.send("Se debe buscar por una categoría a la vez")
       return res.end()
     }
 
     const key = keys[0];
+
+    if(!allowedParams.includes(key)){
+      res.status(400)
+      res.send("Parámetro invalido")
+      return res.end()
+    }
 
     if(!query[key].length){
       res.status(400)
@@ -25,9 +32,10 @@ router
       return res.end()
     }
 
-    if(key == "id"){
+    if(key === "id"){
       let products = await Product.find({id: query.id})
       products = addOfferProperty(products)
+      res.status(200)
       res.json(products)
       return res.end()
     }

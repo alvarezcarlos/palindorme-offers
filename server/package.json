@@ -1,11 +1,11 @@
 {
-  "name": "hn-server",
+  "name": "palindrome-offer",
   "version": "1.0.0",
-  "description": "Hacker news server PoC",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -24,5 +24,11 @@
     "express": "^4.17.1",
     "mongoose": "^5.9.16",
     "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^8.0.1",
+    "server-destroy": "^1.0.1"
   }
 }
