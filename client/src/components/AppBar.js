@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect} from 'react'
 import { ProductContext } from '../context/products.provider'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -83,7 +83,6 @@ export default function SearchAppBar() {
   const [searchBy, setSearchBy] = React.useState('');
   const [search, setSearch] = React.useState('');
   const [products, setProducts] = useContext(ProductContext);
-  
 
   const handleChange = event => {
     setSearchBy(event.target.value);
@@ -94,9 +93,11 @@ export default function SearchAppBar() {
   }
 
   const getProducts = async () => {
-    const response = await fetch(URL + searchBy + search)
+    const response = await fetch(`${URL}?${searchBy}=${search}`)
     let products = await response.json();
     setProducts({data: products})
+    console.log(searchBy);
+    console.log(search);
   }
 
   return (
@@ -119,14 +120,15 @@ export default function SearchAppBar() {
                 <MenuItem value="" disabled>
                   Busqueda por ...
                 </MenuItem>
-                <MenuItem value={"?id="}>Código</MenuItem>
-                <MenuItem value={"?brand="}>Marca</MenuItem>
-                <MenuItem value={"?description="}>Descripción</MenuItem>
+                <MenuItem value={"id"}>Código</MenuItem>
+                <MenuItem value={"brand"}>Marca</MenuItem>
+                <MenuItem value={"description"}>Descripción</MenuItem>
               </Select>
             </FormControl>
           <div className={classes.search}>
             <InputBase
               placeholder="Buscar..."
+              disabled={searchBy === ""}
               onChange={handleSearchChange}
               classes={{
                 root: classes.inputRoot,
@@ -136,7 +138,7 @@ export default function SearchAppBar() {
               inputProps={{ 'aria-label': 'search' }}
             />
           </div>
-          <IconButton onClick={getProducts}>
+          <IconButton disabled={searchBy === ""} onClick={getProducts}>
             <SearchIcon className={classes.searchIcon} />
           </IconButton>
         </Toolbar>

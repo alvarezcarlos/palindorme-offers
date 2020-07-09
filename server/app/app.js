@@ -13,6 +13,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.use("/api", products);
+app.disable('etag');
 
 const server = 
   app.listen(3001, () => {

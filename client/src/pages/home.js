@@ -24,14 +24,14 @@ export default function Home(){
   const [pagedProducts, setPagedProducts] = useState([]);
 
   const handleChange = (event, value) => {
-    console.log(pagedProducts[value - 1])
     setPage(value)
   };
 
   useEffect(() => {
     if(products.data){
-      let pagedProducts = equalPartArray(products.data, perPage)
-      setPagedProducts(pagedProducts)
+      let pagedProducts = equalPartArray(products.data, perPage);
+      setPagedProducts(pagedProducts);
+      setPage(1);
     }
   }, [products.data])
 
@@ -49,7 +49,6 @@ export default function Home(){
               color="primary" 
             />
           </div>
-        <pre>{JSON.stringify(products.data, null, 2)}</pre>
       </div>
     )
   }else{return <AppBar />}

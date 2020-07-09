@@ -2,6 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
 import Typography from '@material-ui/core/Typography';
+import FormatNumber from './FormatNumber';
 import theme from '../theme/theme';
 
 const useStyles = makeStyles({
@@ -22,13 +23,18 @@ export const OfferPrice = props => {
     <div>
       <div className={classes.align}>
         <Typography gutterBottom variant="h5" component="h2">
-          ${props.price / 2}
+          <FormatNumber number={props.price / 2} />
         </Typography>
         <Chip className={classes.chip} label="50%" />
       </div>
       <div className={classes.align}>
-        <Typography style={{textDecoration: "line-through"}}gutterBottom variant="body2" component="p">
-        ${props.price}
+        <Typography 
+          style={{textDecoration: "line-through"}}
+          gutterBottom 
+          variant="body2" 
+          component="p"
+        >
+        <FormatNumber number={props.price} />
         </Typography>
       </div>
     </div>
@@ -38,9 +44,9 @@ export const OfferPrice = props => {
 export const FullPrice = props => {
   const classes = useStyles();
   return(
-    <div className={classes.align}>
+    <div style={{marginBottom: "2em"}}className={classes.align}>
       <Typography gutterBottom variant="h5" component="h2">
-      ${props.price}
+        <FormatNumber number={props.price} />
       </Typography>
     </div>
   )

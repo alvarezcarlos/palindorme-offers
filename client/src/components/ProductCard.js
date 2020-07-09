@@ -35,14 +35,14 @@ const useStyles = makeStyles({
 
 export default function ProductCard(props) {
   const classes = useStyles();
-
+  //([^\/]+$)
   return (
-    <Card className={classes.root}>
+    <Card elevation="10" className={classes.root}>
       <CardActionArea>
         <CardMedia
           className={classes.media}
           image={`http://${props.product.image}`}
-          title="36"
+          title={ props.product.image.match('([^\/]+$)') }
         />
         <CardContent>
           <div className={classes.align}>
