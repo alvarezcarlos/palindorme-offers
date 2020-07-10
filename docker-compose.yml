@@ -1,0 +1,54 @@
+version: "2"
+
+services:
+
+    client:
+        build: ./client
+        restart: always
+        ports:
+            - "3000:3000"
+        volumes:
+            - ./client:/client
+            - /client/node_modules
+        links:
+            - server
+        depends_on: 
+            - server
+        networks:
+            - webappnetwork
+        stdin_open: true
+        tty: true
+            
+    server:
+        container_name: server
+        build: ./server
+        restart: always
+        ports:
+            - "3001:3001"
+        volumes:
+            - ./server:/server
+            - /server/node_modules
+        links:
+          - mongo
+        depends_on:
+          - mongo
+        networks:
+            - webappnetwork
+
+    mongo:
+        image: mongo:3.6.8
+        environment:
+          - MONGO_INITDB_ROOT_USERNAME=productListUser
+          - MONGO_INITDB_ROOT_PASSWORD=productListPassword
+        container_name: mongodb-local
+        restart: always
+        volumes:
+            - "./database:/database"
+        ports:
+            - 27017:27017
+        networks:
+            - webappnetwork
+            
+networks:
+  webappnetwork:
+      driver: bridge
