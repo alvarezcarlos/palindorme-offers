@@ -46,7 +46,6 @@ services:
             - "./database:/database"
         ports:
             - 27017:27017
-        onrun: bash -c './database/import.sh localhost'
         networks:
             - webappnetwork
             
